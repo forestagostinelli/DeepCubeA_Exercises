@@ -2,7 +2,6 @@ from typing import List, Tuple, Union
 import numpy as np
 import torch.nn as nn
 
-from utils.pytorch_models import FullyConnectedModel
 from .environment_abstract import Environment, State
 from random import randrange
 
@@ -91,11 +90,7 @@ class NPuzzle(Environment):
         return len(self.moves)
 
     def get_nnet_model(self) -> nn.Module:
-        state_dim: int = self.dim * self.dim
-        nnet = FullyConnectedModel(state_dim, [100, 100, 100, 100, 1], [True, True, True, True, False],
-                                   ["ReLU", "ReLU", "ReLU", "ReLU", "Linear"])
-
-        return nnet
+        pass
 
     def generate_states(self, num_states: int, backwards_range: Tuple[int, int]) -> Tuple[List[NPuzzleState],
                                                                                           List[int]]:
