@@ -1,4 +1,4 @@
-# DeepCubeA
+# DeepCubeA Exercises
 These are exercises to understand the 
 [DeepCubeA](https://www.ics.uci.edu/~fagostin/assets/files/SolvingTheRubiksCubeWithDeepReinforcementLearningAndSearch_Final.pdf) 
 algorithm.
