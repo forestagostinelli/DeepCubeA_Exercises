@@ -76,14 +76,6 @@ class Environment(ABC):
         """
         pass
 
-    @abstractmethod
-    def get_nnet_model(self) -> nn.Module:
-        """ Get the neural network model for the environment
-
-        @return: neural network model
-        """
-        pass
-
     def generate_states(self, num_states: int, backwards_range: Tuple[int, int]) -> Tuple[List[State], List[int]]:
         """ Generate training states by starting from the goal and taking actions in reverse.
         If the number of actions are not fixed, then a custom implementation must be used.

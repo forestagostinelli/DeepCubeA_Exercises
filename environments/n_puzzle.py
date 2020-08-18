@@ -42,6 +42,8 @@ class NPuzzle(Environment):
         # Next state ops
         self.swap_zero_idxs: np.ndarray = self._get_swap_zero_idxs(self.dim)
 
+        self.one_hot_convert = np.eye(self.dim ** 2).astype(np.uint8)
+
     def next_state(self, states: List[NPuzzleState], action: int) -> Tuple[List[NPuzzleState], List[float]]:
         # initialize
         states_np = np.stack([x.tiles for x in states], axis=0)
@@ -82,15 +84,14 @@ class NPuzzle(Environment):
 
     def state_to_nnet_input(self, states: List[NPuzzleState]) -> np.ndarray:
         states_np = np.stack([x.tiles for x in states], axis=0)
-        states_np = states_np.astype(self.dtype)
+        states_nnet = self.one_hot_convert[states_np].reshape(states_np.shape[0], -1)
 
-        return states_np
+        states_nnet = states_nnet.astype(np.uint8)
+
+        return states_nnet
 
     def get_num_moves(self) -> int:
         return len(self.moves)
-
-    def get_nnet_model(self) -> nn.Module:
-        pass
 
     def generate_states(self, num_states: int, backwards_range: Tuple[int, int]) -> Tuple[List[NPuzzleState],
                                                                                           List[int]]:
