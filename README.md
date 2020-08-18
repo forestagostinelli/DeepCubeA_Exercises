@@ -24,9 +24,9 @@ Luckily, there is an oracle that can tell us the cost-to-go for any state. All w
 architecture that can map any 8-puzzle state to its estimated cost-to-go.
 
 To complete this exercise, you will have to implement:
-- `get_nnet_model` in `environments/n_puzzle.py`
+- `get_nnet_model` in `to_implement/functions.py`
     - This method returns the pytorch model (torch.nn.Module) that maps any 8-puzzle state to its cost-to-go.
-    - The dimensionality of the input will be (B x 16) and the dimensionality of the output will be (B x 1).
-      Where B is the batch size.
-- `train_nnet` in `utils/nnet_utils.py`
+    - The dimensionality of the input will be (B x 81), where B is the batch size. This is because the 8-puzzle has 9 tiles, including the blank tile. 
+    The representation given to the neural network is a one-hot representation for each tile. The dimensionality of the output will be (B x 1).
+- `train_nnet` in `to_implement/functions.py`
     - This method trains the pytorch model
