@@ -6,10 +6,12 @@ from torch import nn
 
 from environments.environment_abstract import Environment, State
 from utils import env_utils
-from utils.nnet_utils import train_nnet, states_nnet_to_pytorch_input
+from utils.nnet_utils import states_nnet_to_pytorch_input
 from utils.misc_utils import split_evenly
 
 import pickle
+
+from to_implement.functions import get_nnet_model, train_nnet
 
 
 def sample_training_data(states: List[State], outputs: np.ndarray, env: Environment, num_samp_total: int):
@@ -38,7 +40,7 @@ def main():
     env: Environment = env_utils.get_environment("puzzle8")
 
     # get nnet model
-    nnet: nn.Module = env.get_nnet_model()
+    nnet: nn.Module = get_nnet_model()
     device = torch.device('cpu')
     batch_size: int = 100
     num_itrs: int = 10000
