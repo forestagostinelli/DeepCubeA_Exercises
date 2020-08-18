@@ -12,11 +12,6 @@ def states_nnet_to_pytorch_input(states_nnet: np.ndarray, device) -> Tensor:
     return states_nnet_tensor
 
 
-def train_nnet(nnet: nn.Module, states_nnet: np.ndarray, outputs: np.ndarray, batch_size: int, num_itrs: int,
-               train_itr: int):
-    pass
-
-
 # loading nnet
 def load_nnet(model_file: str, nnet: nn.Module, device: torch.device = None) -> nn.Module:
     # get state dict
