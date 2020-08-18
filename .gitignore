@@ -1,3 +1,6 @@
 old/
 rsyncToRemote.sh
+to_implement_ans/
+.DS_Store
+.idea/
 *__pycache__*
