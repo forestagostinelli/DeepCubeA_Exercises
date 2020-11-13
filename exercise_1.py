@@ -36,6 +36,8 @@ def sample_training_data(states: List[State], outputs: np.ndarray, env: Environm
 
 
 def main():
+    torch.set_num_threads(1)
+
     # get environment
     env: Environment = env_utils.get_environment("puzzle8")
 
@@ -64,7 +66,7 @@ def main():
         states_targ: List[State] = [data["states"][idx] for idx in idxs_targ]
         states_targ_nnet: np.ndarray = env.state_to_nnet_input(states_targ)
 
-        out_nnet = nnet(states_nnet_to_pytorch_input(states_targ_nnet, device)).cpu().data.numpy()
+        out_nnet = nnet(states_nnet_to_pytorch_input(states_targ_nnet, device).float()).cpu().data.numpy()
 
         mse = float(np.mean((out_nnet - cost_to_go) ** 2))
         print("Cost-To-Go: %i, Ave DNN Output: %f, MSE: %f" % (cost_to_go, float(np.mean(out_nnet)), mse))
