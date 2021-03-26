@@ -19,4 +19,3 @@ def train_nnet(nnet: nn.Module, states_nnet: np.ndarray, outputs: np.ndarray, ba
 
 def value_iteration(nnet, device, env: Environment, states: List[State]) -> List[float]:
     pass
-
