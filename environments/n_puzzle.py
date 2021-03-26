@@ -1,6 +1,5 @@
 from typing import List, Tuple, Union
 import numpy as np
-import torch.nn as nn
 
 from .environment_abstract import Environment, State
 from random import randrange
@@ -93,8 +92,7 @@ class NPuzzle(Environment):
     def get_num_moves(self) -> int:
         return len(self.moves)
 
-    def generate_states(self, num_states: int, backwards_range: Tuple[int, int]) -> Tuple[List[NPuzzleState],
-                                                                                          List[int]]:
+    def generate_states(self, num_states: int, backwards_range: Tuple[int, int]) -> List[NPuzzleState]:
         assert (num_states > 0)
         assert (backwards_range[0] >= 0)
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
@@ -127,16 +125,16 @@ class NPuzzle(Environment):
 
         states: List[NPuzzleState] = [NPuzzleState(x) for x in list(states_np)]
 
-        return states, scramble_nums.tolist()
+        return states
 
-    def expand(self, states: List[State]) -> Tuple[List[List[State]], List[np.ndarray]]:
+    def expand(self, states: List[NPuzzleState]) -> Tuple[List[List[NPuzzleState]], List[List[float]]]:
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
 
         # initialize
         num_states: int = len(states)
         num_env_moves: int = self.get_num_moves()
 
-        states_exp: List[List[State]] = [[] for _ in range(len(states))]
+        states_exp: List[List[NPuzzleState]] = [[] for _ in range(len(states))]
 
         tc: np.ndarray = np.empty([num_states, num_env_moves])
 
@@ -163,7 +161,7 @@ class NPuzzle(Environment):
                 states_exp[idx].append(NPuzzleState(states_next_np[idx]))
 
         # make lists
-        tc_l: List[np.ndarray] = [tc[i] for i in range(num_states)]
+        tc_l: List[List[float]] = [list(tc[i]) for i in range(num_states)]
 
         return states_exp, tc_l
 

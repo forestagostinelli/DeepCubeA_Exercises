@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 import numpy as np
 from typing import List, Tuple
 from random import randrange
-import torch.nn as nn
 
 
 class State(ABC):
@@ -76,7 +75,7 @@ class Environment(ABC):
         """
         pass
 
-    def generate_states(self, num_states: int, backwards_range: Tuple[int, int]) -> Tuple[List[State], List[int]]:
+    def generate_states(self, num_states: int, backwards_range: Tuple[int, int]) -> List[State]:
         """ Generate training states by starting from the goal and taking actions in reverse.
         If the number of actions are not fixed, then a custom implementation must be used.
 
@@ -113,9 +112,9 @@ class Environment(ABC):
 
             num_back_moves[idxs] = num_back_moves[idxs] + 1
 
-        return states, scramble_nums.tolist()
+        return states
 
-    def expand(self, states: List[State]) -> Tuple[List[List[State]], List[np.ndarray]]:
+    def expand(self, states: List[State]) -> Tuple[List[List[State]], List[List[float]]]:
         """ Generate all children for the state
 
         @param states: List of states
@@ -149,6 +148,6 @@ class Environment(ABC):
                 states_exp[idx].append(states_next_move[idx])
 
         # make lists
-        tc_l: List[np.ndarray] = [tc[i] for i in range(num_states)]
+        tc_l: List[List[float]] = [list(tc[i]) for i in range(num_states)]
 
         return states_exp, tc_l

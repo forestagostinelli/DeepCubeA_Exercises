@@ -1,4 +1,6 @@
 from typing import List, Tuple, Any
+from environments.environment_abstract import Environment, State
+from utils.nnet_utils import states_nnet_to_pytorch_input
 import numpy as np
 import math
 
@@ -34,3 +36,16 @@ def split_evenly(num_total: int, num_splits: int) -> List[int]:
         num_per[idx] += 1
 
     return num_per
+
+
+def evaluate_cost_to_go(nnet, device, env: Environment, states: List[State], outputs: np.array):
+    for cost_to_go in np.unique(outputs):
+        idxs_targ: np.array = np.where(outputs == cost_to_go)[0]
+        states_targ: List[State] = [states[idx] for idx in idxs_targ]
+        states_targ_nnet: np.ndarray = env.state_to_nnet_input(states_targ)
+
+        out_nnet = nnet(states_nnet_to_pytorch_input(states_targ_nnet, device).float()).cpu().data.numpy()
+
+        mse = float(np.mean((out_nnet - cost_to_go) ** 2))
+        print("Cost-To-Go: %i, Ave DNN Output: %f, MSE: %f" % (cost_to_go, float(np.mean(out_nnet)), mse))
+
