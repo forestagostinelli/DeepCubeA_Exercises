@@ -10,7 +10,7 @@ Sample outputs of solutions to each exercise are also provided in `sample_output
 
 This currently contains one exercise. More to come.
 
-For any issues, please contact Forest Agostinelli (fagostin@uci.edu)
+For any issues, please contact Forest Agostinelli (foresta@cse.sc.edu)
 
 # Setup
 These exercises require Python3, PyTorch, and numpy.
