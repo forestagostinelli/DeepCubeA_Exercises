@@ -49,4 +49,5 @@ For speed considerations, it is important to batch data sent to the neural netwo
 The functions `misc_utils.flatten` and `misc_utils.unflatten` may help you with this when implementing value iteration.
 
 Use `env.state_to_nnet_input(states)` to convert a list of states to their numpy representation.
+
 Use `env.expand(states)` to get a list of next states for each state as well as the transition costs
